@@ -1,0 +1,24 @@
+name: ESPN weekly fantasy recap
+on:
+  schedule:
+    # 15:00 UTC Tuesday = 11 AM EDT / 10 AM EST
+    - cron: '0 15 * * 2'
+  workflow_dispatch:
+jobs:
+  recap:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch, summarize, and email
+        env:
+          ESPN_LEAGUE_ID: '1773267264'
+          ESPN_SEASON: '2026'
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
+          REPORT_TO: ${{ secrets.REPORT_TO }}
+        run: python recap.py
