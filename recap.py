@@ -8,7 +8,13 @@ URL = f'https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/{SEASON}
 
 
 def fetch():
-    req = urllib.request.Request(URL, headers={'User-Agent': 'Mozilla/5.0 (compatible; FantasyRecap/1.0)', 'Accept': 'application/json'})
+    req = urllib.request.Request(
+    URL,
+    headers={
+        'User-Agent': 'Mozilla/5.0',
+        'Accept': 'application/json',
+    }
+)
     with urllib.request.urlopen(req, timeout=30) as response:
         return json.load(response)
 
